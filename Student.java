@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 class Node {
     int marks;
     String Name;
@@ -32,20 +34,16 @@ class LinkedList {
 
     public void show() {
         if (head == null) {
-            System.out.print("The Linked List is Empty.\n");
+            System.out.println("The Linked List is Empty.");
             return;
         }
         Node temp = head;
         System.out.print("LinkedList is: ");
         while (temp != null) {
-            System.out.print("marks: " + temp.marks);
-            System.out.print(" Name: " + temp.Name);
-            System.out.print(" RollNo: " + temp.RollNo);
-            System.out.print(" -> ");
+            System.out.print("marks: " + temp.marks + " Name: " + temp.Name + " RollNo: " + temp.RollNo + " -> ");
             temp = temp.next;
         }
-        System.out.print("Null");
-        System.out.println();
+        System.out.println("Null");
     }
 
     public void delete(int RollNo) {
@@ -90,7 +88,6 @@ class LinkedList {
         return -1;
     }
 
-    // ✅ NEW UPDATE METHOD
     public void update(int RollNo, String newName, int newMarks, int newRollNo) {
         if (head == null) {
             System.out.println("LinkedList is Empty.");
@@ -116,12 +113,10 @@ class LinkedList {
         if (head == null || head.next == null) {
             return;
         }
-        System.out.println("The Sorted Student LinkedList by Marks:");
         boolean swapped;
         do {
             swapped = false;
             Node current = head;
-
             while (current.next != null) {
                 if (current.marks > current.next.marks) {
                     int tempMarks = current.marks;
@@ -141,34 +136,82 @@ class LinkedList {
                 current = current.next;
             }
         } while (swapped);
+        System.out.println("Students sorted by marks successfully.");
     }
 }
 
 public class Student {
     public static void main(String args[]) {
         LinkedList l1 = new LinkedList();
-        l1.show();
-        l1.add(100, "Ramesh", 1);
-        l1.add(99, "Mukesh", 2);
-        l1.add(90, "Sunil", 3);
-        l1.add(95, "Anil", 4);
-        l1.add(93, "Rohan", 5);
-        l1.show();
+        Scanner sc = new Scanner(System.in);
+        int choice;
 
-        l1.sort();
-        l1.show();
+        do {
+            System.out.println("\n====== Student Linked List Menu ======");
+            System.out.println("1. Add Student");
+            System.out.println("2. Show Students");
+            System.out.println("3. Delete Student");
+            System.out.println("4. Search Student");
+            System.out.println("5. Update Student");
+            System.out.println("6. Sort Students by Marks");
+            System.out.println("0. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            sc.nextLine(); // consume newline
 
-        l1.delete(2);
-        l1.show();
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter Marks: ");
+                    int marks = sc.nextInt();
+                    System.out.print("Enter Roll No: ");
+                    int rollNo = sc.nextInt();
+                    l1.add(marks, name, rollNo);
+                    break;
 
-        l1.search(3);
+                case 2:
+                    l1.show();
+                    break;
 
-        l1.update(3, "Sunil Kumar", 92, 33);
-        l1.show();
+                case 3:
+                    System.out.print("Enter Roll No to delete: ");
+                    int delRoll = sc.nextInt();
+                    l1.delete(delRoll);
+                    break;
 
-        l1.delete(4);
-        l1.show();
-        l1.search(4);
+                case 4:
+                    System.out.print("Enter Roll No to search: ");
+                    int searchRoll = sc.nextInt();
+                    l1.search(searchRoll);
+                    break;
+
+                case 5:
+                    System.out.print("Enter Roll No to update: ");
+                    int updateRoll = sc.nextInt();
+                    sc.nextLine(); // consume newline
+                    System.out.print("Enter new Name: ");
+                    String newName = sc.nextLine();
+                    System.out.print("Enter new Marks: ");
+                    int newMarks = sc.nextInt();
+                    System.out.print("Enter new Roll No: ");
+                    int newRoll = sc.nextInt();
+                    l1.update(updateRoll, newName, newMarks, newRoll);
+                    break;
+
+                case 6:
+                    l1.sort();
+                    break;
+
+                case 0:
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        } while (choice != 0);
+
+        sc.close();
     }
 }
-
